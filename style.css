@@ -1,0 +1,16 @@
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+form {
+  margin-bottom: 10px;
+}
+
+#crud {
+  margin-top: 20px;
+}
+
+#crud form {
+  margin-bottom: 5px;
+}
