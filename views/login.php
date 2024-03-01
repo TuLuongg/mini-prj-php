@@ -1,5 +1,7 @@
-<?php 
-    include_once 'header.php';
+<?php
+include_once 'header.php';
+require_once('controllers/UserController.php');
+
 ?>
 <h1 class="header">Hãy điền thông tin để đăng nhập</h1>
 
@@ -16,6 +18,6 @@
 
 <div class="form-sub-msg"><a href="./reset-password.php">Bạn quên mật khẩu?</a></div>
 
-<?php 
-    include_once 'footer.php'
+<?php
+include_once 'footer.php'
 ?>
