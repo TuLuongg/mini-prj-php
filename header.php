@@ -17,7 +17,7 @@
     <nav>
         <ul>
             <a href="index.php">
-                <li>Home</li>
+                <li>Trang chủ</li>
             </a>
             <?php if(!isset($_SESSION['usersId'])) : ?>
             <a href="register.php">

@@ -3,7 +3,7 @@
     include_once './helpers/session_helper.php';
 ?>
 
-<h1 class="header">Please Signup</h1>
+<h1 class="header">Điền thông tin để tạo tài khoản mới !</h1>
 
 <?php flash('register') ?>
 
@@ -12,7 +12,7 @@
     <input type="text" name="usersUid" placeholder="Username...">
     <input type="password" name="usersPwd" placeholder="Password...">
     <input type="password" name="pwdRepeat" placeholder="Repeat password">
-    <button type="submit" name="submit">Sign Up</button>
+    <button type="submit" name="submit">Đăng ký</button>
 </form>
 
 <?php 

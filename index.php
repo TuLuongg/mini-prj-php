@@ -2,10 +2,10 @@
     include_once 'header.php'
 ?>
 
-<h1 id="index-text">Welcome, <?php if(isset($_SESSION['usersId'])){
+<h1 id="index-text">Xin chào ! <?php if(isset($_SESSION['usersId'])){
         echo explode(" ", $_SESSION['usersName'])[0];
     }else{
-        echo 'Guest';
+        echo 'Khách hàng mới';
     } 
     ?> </h1>
 
