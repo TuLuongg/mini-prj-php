@@ -8,8 +8,12 @@
 
 <form method="post" action="./controllers/UserController.php">
     <input type="hidden" name="type" value="login">
-    <input type="text" name="userName" placeholder="Username...">
-    <input type="password" name="userPwd" placeholder="Password...">
+    <input type="text" name="userName" placeholder="Username..."
+        value="<?php echo isset($_COOKIE['remember_me_username']) ? $_COOKIE['remember_me_username'] : ''; ?>">
+    <input type="password" name="userPwd" placeholder="Password..."
+        value="<?php echo isset($_COOKIE['remember_me_password']) ? $_COOKIE['remember_me_password'] : ''; ?>">
+
+
     <label><input type="checkbox" name="remember"> Nhớ mật khẩu</label>
     <button type="submit" name="submit">Đăng nhập</button>
 </form>

@@ -63,6 +63,7 @@
             exit();
         }
 
+
         //Check for user
         if($this->userModel->findUserByUsername($data['userName'])){
             //User Found
@@ -70,6 +71,7 @@
             if($loggedInUser){
                 //Create session
                 $this->createUserSession($loggedInUser);
+
             }else{
                 flash("login", "Password Incorrect");
                 redirect("../login.php");
@@ -84,8 +86,22 @@
     public function createUserSession($user){
         $_SESSION['userId'] = $user->userId;
         $_SESSION['userName'] = $user->userName;
+    
+        // Kiểm tra xem người dùng đã chọn "Nhớ mật khẩu" hay không
+        if(isset($_POST['remember'])){            
+            // Lưu thông tin đăng nhập vào cookies trong 30 ngày
+            $cookie_name_username = "remember_me_username";
+            $cookie_value_username = $user->userName;
+            setcookie($cookie_name_username, $cookie_value_username, time() + (30 * 24 * 60 * 60), "/");
+    
+            $cookie_name_password = "remember_me_password";
+            $cookie_value_password = $_POST['userPwd']; // Lưu mật khẩu chưa mã hóa, hãy chắc chắn rằng bạn mã hóa mật khẩu trước khi lưu nó.
+            setcookie($cookie_name_password, $cookie_value_password, time() + (30 * 24 * 60 * 60), "/");
+        }
+    
         redirect("../index.php");
     }
+    
 
     public function logout(){
         unset($_SESSION['userId']);
@@ -116,7 +132,7 @@
                 $init->logout();
                 break;
             default:
-            redirect("../index.php");
+            redirect("../login.php");
         }
     }
 
