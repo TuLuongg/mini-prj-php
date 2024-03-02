@@ -9,8 +9,8 @@
 
 <form method="post" action="./controllers/UserController.php">
     <input type="hidden" name="type" value="register">
-    <input type="text" name="usersUid" placeholder="Username...">
-    <input type="password" name="usersPwd" placeholder="Password...">
+    <input type="text" name="userName" placeholder="Username...">
+    <input type="password" name="userPwd" placeholder="Password...">
     <input type="password" name="pwdRepeat" placeholder="Repeat password">
     <button type="submit" name="submit">Đăng ký</button>
 </form>

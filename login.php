@@ -8,8 +8,9 @@
 
 <form method="post" action="./controllers/UserController.php">
     <input type="hidden" name="type" value="login">
-    <input type="text" name="name/email" placeholder="Username/Email...">
-    <input type="password" name="usersPwd" placeholder="Password...">
+    <input type="text" name="userName" placeholder="Username...">
+    <input type="password" name="userPwd" placeholder="Password...">
+    <label><input type="checkbox" name="remember"> Nhớ mật khẩu</label>
     <button type="submit" name="submit">Đăng nhập</button>
 </form>
 

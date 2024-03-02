@@ -1,5 +1,5 @@
 <?php
-require_once 'db_connect.php';
+require_once '../database/Database.php';
 
 class User {
 
@@ -9,43 +9,27 @@ class User {
         $this->db = new Database;
     }
 
-    //Find user by email or username
-    public function findUserByUsername($username){
-        $this->db->query('SELECT * FROM users WHERE usersUid = :username');
-        $this->db->bind(':username', $username);
+   // Tìm người dùng theo tên người dùng
+   public function findUserByUsername($username){
+    $this->db->query('SELECT * FROM users WHERE userName = :username');
+    $this->db->bind(':username', $username);
+    return $this->db->single();
+}
 
-        $row = $this->db->single();
-
-        //Check row
-        if($this->db->rowCount() > 0){
-            return $row;
-        }else{
-            return false;
-        }
-    }
-
-    //Register User
-    public function register($data){
-        $this->db->query('INSERT INTO users (usersUid, usersPwd) VALUES (:username, :password)');
-        //Bind values
-        $this->db->bind(':username', $data['usersUid']);
-        $this->db->bind(':password', $data['usersPwd']);
-
-        //Execute
-        if($this->db->execute()){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
+// Đăng ký người dùng mới
+public function register($data){
+    $this->db->query('INSERT INTO users (userName, userPwd) VALUES (:username, :password)');
+    $this->db->bind(':username', $data['userName']);
+    $this->db->bind(':password', $data['userPwd']);
+    return $this->db->execute();
+}
     //Login user
     public function login($username, $password){
         $row = $this->findUserByUsername($username);
 
         if($row == false) return false;
 
-        $hashedPassword = $row->usersPwd;
+        $hashedPassword = $row->userPwd;
         if(password_verify($password, $hashedPassword)){
             return $row;
         }else{

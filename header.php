@@ -19,7 +19,7 @@
             <a href="index.php">
                 <li>Trang chủ</li>
             </a>
-            <?php if(!isset($_SESSION['usersId'])) : ?>
+            <?php if(!isset($_SESSION['userId'])) : ?>
             <a href="register.php">
                 <li>Đăng ký</li>
             </a>
@@ -27,7 +27,7 @@
                 <li>Đăng nhập</li>
             </a>
             <?php else: ?>
-            <a href="./controllers/Users.php?q=logout">
+            <a href="./controllers/UserController.php?q=logout">
                 <li>Đăng xuất</li>
             </a>
             <?php endif; ?>
