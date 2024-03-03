@@ -132,7 +132,7 @@
                 $init->logout();
                 break;
             default:
-            redirect("../login.php");
+            redirect("../index.php");
         }
     }
 
