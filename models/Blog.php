@@ -9,11 +9,18 @@ class Blog {
         $this->db = new Database;
     }
 
-    // Lấy toàn bộ nội dung (content) từ bảng blogs
     public function getAllContent(){
-        $this->db->query('SELECT * FROM blogs');
-        return $this->db->resultSet();
+        try {
+            $this->db->query('SELECT * FROM blogs');
+            $result = $this->db->resultSet();
+            return $result;
+        } catch (PDOException $e) {
+            // Xử lý ngoại lệ nếu có
+            echo "Error: " . $e->getMessage();
+            return []; // Trả về một mảng rỗng nếu có lỗi
+        }
     }
+    
 
     // Thêm một bản ghi mới vào bảng blogs
     public function addContent($content){
