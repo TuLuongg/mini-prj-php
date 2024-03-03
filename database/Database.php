@@ -5,7 +5,7 @@ class Database {
     private $user = 'root';
     private $dbname = 'mini_prj_php';
 
-    //Will be the PDO object
+    //Đối tượng PDO
     private $dbh;
     private $stmt;
     private $error;
@@ -18,7 +18,7 @@ class Database {
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
         );
 
-        //Create PDO instance
+        //Tạo phiên bản PDO
         try{
             $this->dbh = new PDO($dsn, $this->user, $this->pass, $options);
         }catch(PDOException $e){
@@ -27,12 +27,12 @@ class Database {
         }
     }
 
-    //Prepare statement with query
+    //Chuẩn bị câu lệnh có truy vấn
     public function query($sql){
         $this->stmt = $this->dbh->prepare($sql);
     }
 
-    //Bind values, to prepared statement using named parameters
+    //Liên kết các giá trị với câu lệnh đã chuẩn bị bằng cách sử dụng các tham số được đặt tên
     public function bind($param, $value, $type = null){
         if(is_null($type)){
             switch(true){
@@ -52,24 +52,24 @@ class Database {
         $this->stmt->bindValue($param, $value, $type);
     }
 
-    //Execute the prepared statement
+    //Thực hiện câu lệnh đã chuẩn bị
     public function execute(){
         return $this->stmt->execute();
     }
 
-    //Return multiple records
+    //Trả về nhiều bản ghi
     public function resultSet(){
         $this->execute();
         return $this->stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
-    //Return a single record
+    //Trả về một bản ghi
     public function single(){
         $this->execute();
         return $this->stmt->fetch(PDO::FETCH_OBJ);
     }
 
-    //Get row count
+    //Nhận số hàng
     public function rowCount(){
         return $this->stmt->rowCount();
     }

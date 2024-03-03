@@ -30,6 +30,9 @@
             <a href="./controllers/UserController.php?q=logout">
                 <li>Đăng xuất</li>
             </a>
+            <a href="blog.php">
+                <li>Blogs</li>
+            </a>
             <?php endif; ?>
         </ul>
     </nav>

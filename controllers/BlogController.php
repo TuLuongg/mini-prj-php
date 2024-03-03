@@ -1,74 +1,68 @@
 <?php
-require_once('models/Blog.php');
-class BlogController
-{
-	var $model;
+require_once '../models/Blog.php';
+require_once '../helpers/session_helper.php';
 
-	function __construct()
-	{
-		$this->model = new Blog();
-	}
-	function list()
-	{
-		$data = $this->model->All();
-		require_once('views/blog/list.php');
-	}
+class BlogController {
+    
+    private $blogModel;
 
-	function find()
-	{
-		$id = $_GET['id'];
-		$data = $this->model->find($id);
-		require_once('views/blog/find.php');
-	}
+    public function __construct(){
+        $this->blogModel = new Blog();
+    }
 
-	function add()
-	{
-		require_once('views/blog/add.php');
-	}
+    public function addContent(){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Lấy dữ liệu từ form
+            $content = trim($_POST['content']);
 
-	function store()
-	{
-		$data = $_POST;
-		$status = $this->model->insert($data);
-		if ($status == true) {
-			setcookie('msg', 'Thêm mới thành công', time() + 1);
-			header('location: index.php');
-		} else {
-			setcookie('msg', 'Thêm mới thất bại.', time() + 1);
-			header('location: index.php?');
-		}
-	}
+            // Thêm nội dung vào blog
+            if ($this->blogModel->addContent($content)) {
+                flash('blog', 'Content added successfully');
+                redirect("../blog.php");
+            } else {
+                flash('blog', 'Failed to add content');
+                redirect("../blog.php");
+            }
+        } else {
+            redirect("../blog.php");
+        }
+    }
 
-	function edit()
-	{
-		$id = $_GET['id'];
-		$data = $this->model->find($id);
-		require_once('views/blog/edit.php');
-	}
+    public function deleteContent(){
 
-	function update()
-	{
-		$data = $_POST;
-		$status = $this->model->update($data);
-		if ($status == true) {
-			setcookie('msg', 'Sửa thành công', time() + 1);
-			header('location: index.php?mod=employee');
-		} else {
-			setcookie('msg', 'Sửa thất bại.', time() + 1);
-			header('location: index.php?mod=employee&act=edit');
-		}
-	}
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Lấy ID của nội dung muốn xóa
+            $id = trim($_POST['id']);
 
-	function delete()
-	{
-		$id = $_GET['id'];
-		$status = $this->model->delete($id);
-		if ($status == true) {
-			setcookie('msg', 'Xoá thành công', time() + 1);
-			header('location: index.php?mod=employee');
-		} else {
-			setcookie('msg', 'Xoá thất bại.', time() + 1);
-			header('location: index.php?mod=employee&act=list');
-		}
-	}
+            // Xóa nội dung từ blog
+            if ($this->blogModel->deleteContent($id)) {
+                flash('blog', 'Content deleted successfully');
+                redirect("../blog.php");
+            } else {
+                flash('blog', 'Failed to delete content');
+                redirect("../blog.php");
+            }
+        } else {
+            redirect("../blog.php");
+        }
+    }
 }
+
+$blogController = new BlogController();
+
+// Xử lý yêu cầu dựa trên type được gửi từ form
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    switch($_POST['type']) {
+        case 'add':
+            $blogController->addContent();
+            break;
+        case 'delete':
+            $blogController->deleteContent();
+            break;
+        default:
+            redirect("../blog.php");
+    }
+} else {
+    redirect("../blog.php");
+}
+?>
