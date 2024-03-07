@@ -3,7 +3,6 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
@@ -14,7 +13,7 @@ body {
 nav ul {
   list-style: none;
   overflow: hidden;
-  background-color: #32a241;
+  background-color: #f4ebd0;
 }
 
 nav ul li {
@@ -33,7 +32,8 @@ nav ul a:nth-child(n + 2) {
 }
 
 nav ul li:hover {
-  background-color: #cccccc;
+  background-color: #f16435;
+  border-radius: 10px;
 }
 
 @media (max-width: 600px) {
@@ -42,9 +42,11 @@ nav ul li:hover {
     text-align: center;
     padding: 10px 0;
   }
+
   nav a {
     float: unset !important;
   }
+
   nav ul {
     overflow: unset !important;
   }
@@ -86,6 +88,10 @@ textarea {
   font-size: 100%;
 }
 
+button {
+  border-radius: 10px;
+}
+
 #footer {
   position: absolute;
   bottom: 0;
@@ -96,7 +102,7 @@ textarea {
 
 #footer p {
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   padding: 30px 0;
 }
 
@@ -105,6 +111,7 @@ textarea {
     position: static;
     margin-top: 400px;
   }
+
   #footer p {
     padding: 30px 0 200px 0;
   }
@@ -155,6 +162,44 @@ textarea {
   color: #00334d;
 }
 
+.header-button {
+  margin: 10px;
+  border-radius: 10px;
+  background-color: #f3a781;
+}
+
+.nav-text-style {
+  color: #0e0f17ea;
+}
+
+// <uniquifier>: Use a unique and descriptive class name
+// <weight>: Use a value from 200 to 1000
+
+.nunito-nav-text {
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.content {
+  padding-left: 35%;
+  padding-right: 20%;
+  display: flex;
+}
+
+.blog-content {
+  width: 80%;
+  display: flex;
+  align-items: center;
+}
+
+.blog-delete-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 a,
 a:link,
 a:visited,
@@ -163,4 +208,5 @@ a:active {
   text-decoration: none;
   color: inherit;
 }
+
 /*# sourceMappingURL=style.css.map */

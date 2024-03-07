@@ -1,5 +1,5 @@
 <div id="footer">
-    <p>&copy; Lương Xuân Tú <?php echo date("Y"); ?></p>
+    <p>&copy; Sun* - Talent & Product Incubator Vietnam Unit <?php echo date("Y"); ?></p>
 </div>
 
 </body>
