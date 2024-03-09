@@ -1,15 +1,18 @@
 <?php
 require_once '../database/Database.php';
 
-class Blog {
+class Blog
+{
 
     private $db;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->db = new Database;
     }
 
-    public function getAllContent(){
+    public function getAllContent()
+    {
         try {
             $this->db->query('SELECT * FROM blogs');
             $result = $this->db->resultSet();
@@ -20,20 +23,38 @@ class Blog {
             return []; // Trả về một mảng rỗng nếu có lỗi
         }
     }
-    
+
 
     // Thêm một bản ghi mới vào bảng blogs
-    public function addContent($content){
+    public function addContent($content)
+    {
         $this->db->query('INSERT INTO blogs (content) VALUES (:content)');
         $this->db->bind(':content', $content);
         return $this->db->execute();
     }
 
     // Xóa một bản ghi từ bảng blogs dựa trên id
-    public function deleteContent($id){
+    public function deleteContent($id)
+    {
         $this->db->query('DELETE FROM blogs WHERE id = :id');
         $this->db->bind(':id', $id);
         return $this->db->execute();
     }
+
+    // Lấy một bản ghi từ bảng blogs dựa trên id
+    public function getContentById($id)
+    {
+        $this->db->query('SELECT * FROM blogs WHERE id = :id');
+        $this->db->bind(':id', $id);
+        return $this->db->single();
+    }
+
+    // Cập nhật một bản ghi trong bảng blogs dựa trên id
+    public function updateContent($id, $content)
+    {
+        $this->db->query('UPDATE blogs SET content = :content WHERE id = :id');
+        $this->db->bind(':id', $id);
+        $this->db->bind(':content', $content);
+        return $this->db->execute();
+    }
 }
-?>

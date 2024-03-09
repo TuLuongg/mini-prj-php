@@ -1,7 +1,7 @@
 <?php
 // Include file header.php và session_helper.php
 include_once 'header.php';
-include_once './helpers/session_helper.php';
+include_once '../helpers/session_helper.php';
 
 try {
     // Kết nối đến cơ sở dữ liệu
@@ -21,7 +21,7 @@ try {
 
 <?php flash('blog') ?>
 
-<form method="post" action="./controllers/BlogController.php">
+<form method="post" action="../controllers/bController.php">
     <input type="hidden" name="type" value="add">
     <input type="text" name="content" placeholder="Content...">
     <button type="submit" name="submit">Thêm</button>
@@ -31,7 +31,7 @@ try {
     <?php foreach ($contents as $content) : ?>
         <li class="content">
             <p class="blog-content"><?php echo $content['content']; ?></p>
-            <form method="post" action="./controllers/BlogController.php" style="display: inline;">
+            <form method="post" action="../controllers/bController.php" style="display: inline;">
                 <input type="hidden" name="type" value="delete">
                 <input type="hidden" name="id" value="<?php echo $content['id']; ?>">
                 <button class="blog-delete-button" type="submit" name="submit" style="color: red;">Xóa</button>
@@ -41,6 +41,6 @@ try {
 </ul>
 
 <?php
-// Include file footer.php
+
 include_once 'footer.php';
 ?>
