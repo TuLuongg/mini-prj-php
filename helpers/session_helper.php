@@ -3,6 +3,7 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
+
 function flash($name = '', $message = '', $class = 'form-message form-message-red')
 {
     if (!empty($name)) {
@@ -35,6 +36,8 @@ function success($name = '', $message = '', $class = 'form-message form-message-
 
 function redirect($location)
 {
+    // Chuyển hướng đến địa chỉ được chỉ định
     header("location: " . $location);
     exit();
 }
+?>
