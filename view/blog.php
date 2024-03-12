@@ -25,35 +25,40 @@ try {
 
 <ul>
     <?php foreach ($contents as $content) : ?>
-    <li class="content">
-        <p class="blog-content"><?php echo $content['content']; ?></p>
-        <form method="post" action="../controllers/bController.php" style="display: inline;">
-            <input type="hidden" name="type" value="delete">
-            <input type="hidden" name="id" value="<?php echo $content['id']; ?>">
-            <button class="blog-delete-button" type="submit" name="submit" style="color: red;">Xóa</button>
-        </form>
-        <!-- Thêm nút cập nhật và form cập nhật -->
-        <button class="blog-update-button" onclick="showUpdateForm(<?php echo $content['id']; ?>)">Cập nhật</button>
-        <form id="updateForm_<?php echo $content['id']; ?>" method="post" action="../controllers/bController.php"
-            style="display: none;">
-            <input type="hidden" name="type" value="update">
-            <input type="hidden" name="id" value="<?php echo $content['id']; ?>">
-            <input type="text" name="content" placeholder="New Content...">
-            <button type="submit" name="submit">Cập nhật</button>
-        </form>
-    </li>
+        <li class="content">
+            <p class="blog-content"><?php echo $content['content']; ?></p>
+            <div class="blog-button">
+                <!-- Thêm nút xóa và form xóa -->
+                <form method="post" class="blog-delete-form" action="../controllers/bController.php">
+                    <input type="hidden" name="type" value="delete">
+                    <input type="hidden" name="id" value="<?php echo $content['id']; ?>">
+                    <button class="blog-delete-button" type="submit" name="submit">Xóa</button>
+                </form>
+                <!-- Thêm nút cập nhật và form cập nhật -->
+                <button id="edit-button" class="blog-update-button" onclick="showUpdateForm(<?php echo $content['id']; ?>)">Sửa</button>
+                <form id="updateForm_<?php echo $content['id']; ?>" method="post" action="../controllers/bController.php" style="display: none;">
+                    <input type="hidden" name="type" value="update">
+                    <input type="hidden" name="id" value="<?php echo $content['id']; ?>">
+                    <input type="text" name="content" placeholder="Edit Content...">
+                    <button type="submit" style="background-color: greenyellow;" name="submit">Xác nhận</button>
+                </form>
+            </div>
+
+        </li>
     <?php endforeach; ?>
 </ul>
 
 <script>
-function showUpdateForm(id) {
-    var updateForm = document.getElementById('updateForm_' + id);
-    if (updateForm.style.display === "none") {
-        updateForm.style.display = "block";
-    } else {
-        updateForm.style.display = "none";
+    function showUpdateForm(id) {
+        var updateForm = document.getElementById('updateForm_' + id);
+        var editButton = document.getElementById('edit-button');
+        editButton.style.display = "none";
+        if (updateForm.style.display === "none") {
+            updateForm.style.display = "block";
+        } else {
+            updateForm.style.display = "none";
+        }
     }
-}
 </script>
 
 <?php
