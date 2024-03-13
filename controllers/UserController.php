@@ -12,17 +12,16 @@ class UserController
     {
         $this->userModel = new User;
 
-    // Kiểm tra cookie và đăng nhập tự động nếu có
-    if (isset($_COOKIE['remember_me_username']) && isset($_COOKIE['remember_me_password'])) {
-        $username = $_COOKIE['remember_me_username'];
-        $password = $_COOKIE['remember_me_password'];
-        $loggedInUser = $this->userModel->login($username, $password);
-        if ($loggedInUser) {
-            // Tạo session
-            $this->createUserSession($loggedInUser);
+        // Kiểm tra cookie và đăng nhập tự động nếu có
+        if (isset($_COOKIE['remember_me_username']) && isset($_COOKIE['remember_me_password'])) {
+            $username = $_COOKIE['remember_me_username'];
+            $password = $_COOKIE['remember_me_password'];
+            $loggedInUser = $this->userModel->login($username, $password);
+            if ($loggedInUser) {
+                // Tạo session
+                $this->createUserSession($loggedInUser);
+            }
         }
-    }
-
     }
 
     public function register()
@@ -100,51 +99,50 @@ class UserController
     }
 
     public function createUserSession($user)
-{
-    $_SESSION['userId'] = $user->userId;
-    $_SESSION['userName'] = $user->userName;
+    {
+        $_SESSION['userId'] = $user->userId;
+        $_SESSION['userName'] = $user->userName;
 
-    // Kiểm tra xem người dùng đã chọn "Nhớ mật khẩu" hay không
-    if (isset($_POST['remember'])) {
-        // Lưu thông tin đăng nhập vào cookies trong 30 ngày
-        $cookie_name_id = "remember_me_id";
-        $cookie_value_id = $user->userId;
-        setcookie($cookie_name_id, $cookie_value_id, time() + (30 * 24 * 60 * 60), "/");
+        // Kiểm tra xem người dùng đã chọn "Lưu trạng thái đăng nhập" hay không
+        if (isset($_POST['remember'])) {
+            // Lưu thông tin đăng nhập vào cookies trong 30 ngày
+            $cookie_name_id = "remember_me_id";
+            $cookie_value_id = $user->userId;
+            setcookie($cookie_name_id, $cookie_value_id, time() + (30 * 24 * 60 * 60), "/");
 
-        $cookie_name_username = "remember_me_username";
-        $cookie_value_username = $user->userName;
-        setcookie($cookie_name_username, $cookie_value_username, time() + (30 * 24 * 60 * 60), "/");
+            $cookie_name_username = "remember_me_username";
+            $cookie_value_username = $user->userName;
+            setcookie($cookie_name_username, $cookie_value_username, time() + (30 * 24 * 60 * 60), "/");
 
-        // Không lưu mật khẩu vào cookie nếu đăng nhập tự động
-        if (!isset($_COOKIE['remember_me_password'])) {
-            $cookie_name_password = "remember_me_password";
-            $cookie_value_password = $_POST['userPwd']; // Lưu mật khẩu chưa mã hóa, hãy chắc chắn rằng bạn mã hóa mật khẩu trước khi lưu nó.
-            setcookie($cookie_name_password, $cookie_value_password, time() + (30 * 24 * 60 * 60), "/");
+            // Không lưu mật khẩu vào cookie nếu đăng nhập tự động
+            if (!isset($_COOKIE['remember_me_password'])) {
+                $cookie_name_password = "remember_me_password";
+                $cookie_value_password = password_hash($_POST['userPwd'], PASSWORD_DEFAULT);
+                setcookie($cookie_name_password, $cookie_value_password, time() + (30 * 24 * 60 * 60), "/");
+            }
         }
     }
-}
 
 
 
-public function logout()
-{
-    // Xóa các biến phiên và hủy phiên
-    session_unset();
-    session_destroy();
-    
-    // Xóa cookies nếu tồn tại
-    if(isset($_COOKIE['remember_me_id'])) {
-        setcookie('remember_me_id', '', time() - 3600, '/');
+    public function logout()
+    {
+        // Xóa các biến phiên và hủy phiên
+        session_unset();
+        session_destroy();
+
+        // Xóa cookies nếu tồn tại
+        if (isset($_COOKIE['remember_me_id'])) {
+            setcookie('remember_me_id', '', time() - 3600, '/');
+        }
+        if (isset($_COOKIE['remember_me_username'])) {
+            setcookie('remember_me_username', '', time() - 3600, '/');
+        }
+        if (isset($_COOKIE['remember_me_password'])) {
+            setcookie('remember_me_password', '', time() - 3600, '/');
+        }
+
+        // Chuyển hướng đến trang index hoặc trang đăng nhập
+        redirect("../view/index.php");
     }
-    if(isset($_COOKIE['remember_me_username'])) {
-        setcookie('remember_me_username', '', time() - 3600, '/');
-    }
-    if(isset($_COOKIE['remember_me_password'])) {
-        setcookie('remember_me_password', '', time() - 3600, '/');
-    }
-    
-    // Chuyển hướng đến trang index hoặc trang đăng nhập
-    redirect("../view/index.php");
-}
-
 }
